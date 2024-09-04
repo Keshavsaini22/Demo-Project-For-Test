@@ -1,0 +1,76 @@
+version: '4.0'
+
+services:
+  #Backend service
+  backend:
+    container_name: test-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dependency-base
+    ports:
+      - ${APP_FORWARD_PORT:-4000}:${APP_PORT:-4000}
+    volumes:
+      - .:/app
+    networks:
+      - test_network
+    restart: on-failure
+    tty: true
+    stdin_open: true
+    expose:
+      - ${APP_PORT:-4000}
+
+  #postgres DB service
+  database:
+    image: postgres:16.1-alpine3.18
+    container_name: test-database
+    restart: always
+    ports:
+      - ${DB_FORWARD_PORT:-5432}:5432
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME:-"postgres"}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-"root"}
+      - POSTGRES_DB=${DATABASE_NAME:-"Test_db"}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - test_network
+
+  #pgAdmin service
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: test-pgadmin
+    restart: always
+    ports:
+      - ${PGADMIN_FORWARD_PORT:-8888}:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-"5wYI5@example.com"}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-"zenmonk"}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - test_network
+
+  #Redis Service
+  redis:
+    image: redis/redis-stack-server:latest
+    container_name: test-redis
+    restart: always
+    ports:
+      - ${REDIS_FORWARD_PORT:-6379}:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    name: test_shared_network
+    external: true
+
+volumes:
+  pg_data: {}
+  pgadmin_data: {}
+  redis_data: {}
+
+#docker network create test_shared_network  
