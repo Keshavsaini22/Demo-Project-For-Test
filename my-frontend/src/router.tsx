@@ -4,6 +4,7 @@ import Signup from "./pages/SignUp";
 import BaseLayout from "./layouts/BaseLayout";
 import SidebarLayout from "./layouts/SidebarLayout";
 import UserSettings from "./pages/UserSettings";
+import Home from "./pages/Home";
 
 function Route(isLogined: true | false, role: string) {
     const routes: RouteObject[] = [
@@ -28,7 +29,7 @@ function Route(isLogined: true | false, role: string) {
             children: [
                 {
                     path: '/',
-                    element: <>HELLO HOME</>
+                    element: <Home />
                 },
                 {
                     path: 'setting',
