@@ -5,9 +5,12 @@ import styles from './Signup.module.css'
 import signup from '../../assets/Images/signup.png'
 import { detectBrowser } from '../../libs/commonFxn';
 import { Link, useNavigate } from 'react-router-dom'
+import { signupUserData } from '../../feature/auth/auth.action';
+import { useAppDispatch } from '../../hooks';
+import { useNotification } from '../../hooks/useNotification';
 
 type Data = {
-  name: string
+  first_name: string
   last_name: string
   email: string
   password: string
@@ -17,13 +20,15 @@ type Data = {
 }
 
 function Signup() {
+  const dispatch = useAppDispatch()
+  const showNotification = useNotification();
   const [preview, setPreview] = useState<Number>(1)
   const navigate = useNavigate();
   const initError = {
     email: false,
     password: false,
     confirmPassword: false,
-    name: false,
+    first_name: false,
     last_name: false,
     username: false,
     tnc: false,
@@ -33,13 +38,13 @@ function Signup() {
       email: false,
       password: false,
       confirmPassword: false,
-      name: false,
+      first_name: false,
       last_name: false,
       username: false,
     }
   };
   const [error, setError] = useState(initError);
-  const initStage = { name: '', last_name: '', email: "", confirmPassword: '', password: "", username: "", tnc: false }
+  const initStage = { first_name: '', last_name: '', email: "", confirmPassword: '', password: "", username: "", tnc: false }
   const [data, setData] = useState<Data>(initStage)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -83,9 +88,9 @@ function Signup() {
   };
   function check_name(data: string) {
     if (data === "" || !validateName(data)) {
-      setError(pre => ({ ...pre, name: true, required: { ...pre.required, name: true } }));
+      setError(pre => ({ ...pre, first_name: true, required: { ...pre.required, first_name: true } }));
     } else {
-      setError(pre => ({ ...pre, name: false, required: { ...pre.required, name: false } }));
+      setError(pre => ({ ...pre, first_name: false, required: { ...pre.required, first_name: false } }));
     }
   }
   function check_lastName(data: string) {
@@ -132,8 +137,32 @@ function Signup() {
         return;
       }
       setError(initError);
+      var response = await dispatch(signupUserData({
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        role:"user",
+        password: data.password,
+        username: data.username
+      }));
+      if (response.type === 'signup user/rejected')
+        throw response
+      if (response.payload) {
+        showNotification("Registered successfully", "success");
+        setData(initStage);
+        navigate('/auth/login');
+      }
     } catch (error: any) {
-
+      console.log('error: ', error);
+      if (error.payload?.response?.status === 409) {
+        showNotification(error.payload?.response?.data, "error");
+        console.log('error.payload?.response?.data: ', error.payload?.response?.data);
+        setError(pre => ({ ...pre, conflict: true }))
+      }
+      if (error.payload?.response?.status === 400) {
+        showNotification(error.payload?.response?.data, "error");
+        setError(pre => ({ ...pre, badRequest: error.payload?.response?.data }))
+      }
     }
   };
 
@@ -256,13 +285,13 @@ function Signup() {
         <FormGroup className={styles.inputWraper}>
           <FormLabel className={styles.inputlabel}>First Name*</FormLabel>
           <InputBase
-            className={`${styles.inputBox} ${error.name ? styles.errorInput : ''}`}
-            value={data?.name}
+            className={`${styles.inputBox} ${error.first_name ? styles.errorInput : ''}`}
+            value={data?.first_name}
             onChange={(e) => {
               const value = e.target.value;
               if (/^[A-Za-z]*$/.test(value)) {
                 check_name(value);
-                setData((pre) => ({ ...pre, name: value }));
+                setData((pre) => ({ ...pre, first_name: value }));
               }
             }}
             inputProps={{
@@ -270,8 +299,8 @@ function Signup() {
               title: 'Only alphabetic characters are allowed',
             }}
           />
-          {error.name && !data.name && <FormHelperText className={styles.FormHelperText}>Name is required</FormHelperText>}
-          {error.name && data.name && <FormHelperText className={styles.FormHelperText}>Invalid Name</FormHelperText>}
+          {error.first_name && !data.first_name && <FormHelperText className={styles.FormHelperText}>Name is required</FormHelperText>}
+          {error.first_name && data.first_name && <FormHelperText className={styles.FormHelperText}>Invalid Name</FormHelperText>}
         </FormGroup>
 
         <FormGroup className={styles.inputWraper}>
@@ -315,7 +344,7 @@ function Signup() {
         </FormGroup>
         <Box className={styles.btnsWrap}>
           <Button className={`${styles.signInBtn} ${styles.prevBtn}`} onClick={() => { setPreview(1) }}> Previous</Button>
-          <Button className={styles.signInBtn} onClick={HandleSignup} disabled={(data.name.length === 0 || data.last_name.length === 0 || !(data.username.length >= 6))} > Sign up</Button>
+          <Button className={styles.signInBtn} onClick={HandleSignup} disabled={(data?.first_name?.length === 0 || data.last_name.length === 0 || !(data.username.length >= 6))} > Sign up</Button>
         </Box>
       </Box>}
     </Box>
