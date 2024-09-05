@@ -87,7 +87,7 @@
 
     & a {
         text-decoration: unset !important;
-        color: #1c64f2 !important;
+        color: #FF9863 !important;
         font-weight: 600;
     }
 }
@@ -100,13 +100,13 @@
     font-size: 16px !important;
     line-height: 20px !important;
     color: white !important;
-    background-color: #1c64f2 !important;
+    background-color: #FF9863 !important;
     margin-top: 10px !important;
     text-transform: unset !important;
 }
 
 .signInBtn:disabled {
-    background-color: #1c64f299 !important;
+    background-color: #F3BEA3 !important;
 
 }
 
@@ -125,7 +125,7 @@
 }
 
 .loginLinkBtn {
-    color: rgb(0, 136, 255) !important;
+    color: #FF9863 !important;
     text-decoration: none !important;
 }
 

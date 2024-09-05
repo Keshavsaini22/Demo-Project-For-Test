@@ -46,7 +46,7 @@ function SidePanelNavbar({ handleClickAvatar, setOpenDrawer, openDrawer }: props
                     <img src={calenderSvg} alt='calender' /> &nbsp;
                     <Typography className={styles.dateText}>{getWeekDay()}</Typography>
                 </Box>
-                <Box sx={{ cursor: 'pointer', color: bell ? "red" : "black" }} className={styles.notificationBox}
+                <Box sx={{ cursor: 'pointer', color: bell ? "#FF9863" : "black" }} className={styles.notificationBox}
                     onClick={() => { navigate('/notification'); }} >
                     {
                         bell ? <NotificationsActiveIcon sx={{ width: "30px", height: "30px" }} /> : <NotificationsIcon sx={{ width: "30px", height: "30px" }} />

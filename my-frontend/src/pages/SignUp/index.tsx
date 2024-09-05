@@ -141,7 +141,7 @@ function Signup() {
         first_name: data.first_name,
         last_name: data.last_name,
         email: data.email,
-        role:"user",
+        role: "user",
         password: data.password,
         username: data.username
       }));
@@ -261,16 +261,18 @@ function Signup() {
           <FormControlLabel
             control={
               <Checkbox
-                checked={data.tnc} // Bind the checkbox to the state
+                checked={data.tnc}
                 onChange={handleChange}
-                // className={styles.tncCheckBox}
                 id="checkbox"
-                sx={{ padding: "0", paddingLeft: "9px" }}
-
+                sx={{
+                  padding: "0", paddingLeft: "9px", color: '#FF9863', '&.Mui-checked': {
+                    color: '#FF9863',
+                  },
+                }}
               />
             }
             label={<Typography className={styles.tncText}>I accept the
-              <Link to={"#"}>Terms and Conditions</Link>
+              <Link to={"#"}> Terms and Conditions</Link>
             </Typography>}
           />
           <Typography className={`${styles.tncText} ${styles.loginRedirect}`}>

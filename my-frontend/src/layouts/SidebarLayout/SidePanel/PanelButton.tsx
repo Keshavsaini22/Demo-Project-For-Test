@@ -12,7 +12,7 @@ interface props {
 const PanelButton = (props: props) => {
     const { title, image, handleClick,selected } = props
     return (
-        <Box className={styles.items} onClick={handleClick} style={selected ? {backgroundColor:'#dceeff'} : {}}>
+        <Box className={styles.items} onClick={handleClick} style={selected ? {backgroundColor:'#FF9863'} : {}}>
             <img src={image} alt={title} className={styles.itemImg} />
             &nbsp;&nbsp;<Typography>
                 {title} 

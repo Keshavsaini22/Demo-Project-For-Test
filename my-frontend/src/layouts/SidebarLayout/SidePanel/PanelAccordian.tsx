@@ -50,7 +50,7 @@ export const AccordianMenuItem = (props: { id: number, title: string, image: str
     const navigate = useNavigate()
     const location = useLocation();
     return (
-        <MenuItem style={location.pathname === redirect ? {backgroundColor:'#dceeff'} : {}} className={styles.menuItems} onClick={() => { navigate(redirect) }}>
+        <MenuItem style={location.pathname === redirect ? {backgroundColor:'#FF9863'} : {}} className={styles.menuItems} onClick={() => { navigate(redirect) }}>
             <img src={image} alt={title} className={styles.itemImg} />&nbsp;
             <Typography className={styles.itemText} >
                 {title}
