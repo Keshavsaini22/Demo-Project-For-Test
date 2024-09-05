@@ -9,7 +9,7 @@ class AuthRoutes {
 
     setupRoutes() {
         this.router.post("/register", authController.register);
-        this.router.get("/login", authController.login);
+        this.router.post("/login", authController.login);
     }
 
     getRouter() {

@@ -19,18 +19,18 @@ class AuthService {
     }
 
     static async login(payload) {
-        const { identifier, password } = payload.body;
-        if (!identifier) throw new error.badRequest('Email or username is required');
+        const { email, password } = payload.body;
+        if (!email) throw new error.badRequest('Email or username is required');
         if (!password) throw new error.badRequest('Password is required');
 
         let whereobj = {};
         // Regular expression to match email pattern
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (emailRegex.test(identifier)) {
-            whereobj.email = identifier;
+        if (emailRegex.test(email)) {
+            whereobj.email = email;
         }
         else {
-            whereobj.username = identifier;
+            whereobj.username = email;
         }
 
         let user = await authRepository.findOne(whereobj);

@@ -1,15 +1,15 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import BaseLayout from "./layouts/BaseLayout";
 import SidebarLayout from "./layouts/SidebarLayout";
 
-function Route() {
+function Route(isLogined: true | false, role: string) {
     const routes: RouteObject[] = [
         {
 
             path: 'auth',
-            element: <BaseLayout />,
+            element: isLogined ? <Navigate to={'/'} /> : <BaseLayout />,
             children: [
                 {
                     path: 'login',
@@ -23,7 +23,7 @@ function Route() {
         },
         {
             path: "/",
-            element: <SidebarLayout />,
+            element: isLogined ? <SidebarLayout /> : <Navigate to='/auth/login' />,
             children: [
                 {
                     path: '/',

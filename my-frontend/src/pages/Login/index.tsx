@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { detectBrowser } from '../../libs/commonFxn'
 import styles from './Login.module.css'
 import { Box, Button, FormGroup, FormHelperText, FormLabel, InputBase, Typography, IconButton, InputAdornment } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import loginPng from '../../assets/Images/login.png'
 import { Link } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { useNotification } from '../../hooks/useNotification'
+import { reset } from '../../feature/auth/auth.slice'
+import { RootState } from '../../store/store'
+import { LoginApi } from '../../feature/auth/auth.action'
 
 type Data = {
     email: string
@@ -13,6 +18,8 @@ type Data = {
 }
 
 function Login() {
+    const dispatch = useAppDispatch();
+    const showNotification = useNotification();
     const initStage = {
         email: "",
         password: '',
@@ -25,6 +32,19 @@ function Login() {
     });
     const [showPassword, setShowPassword] = useState(false);
     const browser = detectBrowser();
+    const state = useAppSelector((state: RootState) => state.persistedReducer)
+
+    useEffect(() => {
+        (async () => {
+            if (state.error)
+                await dispatch(reset());
+        })()
+        if (state.error)
+            setError({
+                email: true,
+                password: true,
+            })
+    }, [state.error])
 
     const handleClickShowPassword = () => {
         setShowPassword((prev) => !prev);
@@ -47,9 +67,22 @@ function Login() {
         }
 
         try {
+            const res: any = await dispatch(LoginApi({ email: data.email, password: data.password }));
+            if (res?.meta?.requestStatus === "fulfilled") {
+                showNotification("Login successfully", "success");
+            }
+            if (res?.meta?.requestStatus === "rejected") {
+                // Display error message for invalid login
+                showNotification(res?.payload?.response?.data || "Error", "error");
 
+                // Based on the response, set appropriate errors
+                if (res?.payload?.response?.data) {
+                    setError((prev) => ({ ...prev, email: false, password: false }));
+                }
+            }
         } catch (error) {
-
+            showNotification("Error", "error");
+            console.log('error: ', error);
         }
     };
 
@@ -144,7 +177,7 @@ function Login() {
                     </Typography>
                 </Box>
                 <Button className={styles.signInBtn}
-                //  onClick={HandleLogin} disabled={(data.email.length === 0 || data.password.length === 0 || state.isLoading === true || (state.token !== ''))}
+                    onClick={HandleLogin} disabled={(data.email.length === 0 || data.password.length === 0 || state.isLoading === true || (state.token !== ''))}
                 > Sign In</Button>
             </Box>
         </Box>
