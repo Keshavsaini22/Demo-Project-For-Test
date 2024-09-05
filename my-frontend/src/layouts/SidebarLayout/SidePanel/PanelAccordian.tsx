@@ -28,7 +28,7 @@ const PanelAccordian = (props: props) => {
                 id="panel1-header"
                 className={styles.accSummary}
             >
-                <img src={image} alt={title} className={styles.itemImg} /> &nbsp;{title} 
+                <img src={image} alt={title} className={styles.itemImg} /> &nbsp;{title}
             </AccordionSummary>
             <AccordionDetails>
                 {
@@ -50,7 +50,7 @@ export const AccordianMenuItem = (props: { id: number, title: string, image: str
     const navigate = useNavigate()
     const location = useLocation();
     return (
-        <MenuItem style={location.pathname === redirect ? {backgroundColor:'#FF9863'} : {}} className={styles.menuItems} onClick={() => { navigate(redirect) }}>
+        <MenuItem style={location.pathname === redirect ? { backgroundColor: '#FF9863', borderRadius: '10px' } : {}} className={styles.menuItems} onClick={() => { navigate(redirect) }}>
             <img src={image} alt={title} className={styles.itemImg} />&nbsp;
             <Typography className={styles.itemText} >
                 {title}

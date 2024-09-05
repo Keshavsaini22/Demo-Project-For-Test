@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios";
 import { loginApiPayload, loginApiResponse } from "./auth.type";
-import { signupService } from "../../services/signup.service";
+import { signupService, updateEmployeeService } from "../../services/signup.service";
 
 const authRequest = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -34,3 +34,13 @@ export const LoginApi = createAsyncThunk('Auth/Login', async (payload: loginApiP
         return rejectWithValue(error)
       }
     })
+
+    export const updateUserAction = createAsyncThunk('update employee', async ({data, id}:any,{rejectWithValue}) => {
+      try {
+          if(!id) id ='';
+          const response = await updateEmployeeService(data, id);
+          return response.data;
+      } catch (error) {
+        return rejectWithValue(error)
+      }
+  })

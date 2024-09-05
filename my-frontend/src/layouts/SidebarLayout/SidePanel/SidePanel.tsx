@@ -41,7 +41,7 @@ const SidePanel = ({ handleLogout }: { handleLogout: Function }) => {
    const Navigate = useNavigate()
    return (
       <Box className={styles.root}>
-         <PanelButton selected={location.pathname === "/"} id={1} title={'Dashboard'} image={DashboardPng} handleClick={() => { setSelected(1); Navigate('/dashboard') }} />
+         <PanelButton selected={location.pathname === "/"} id={1} title={'Dashboard'} image={DashboardPng} handleClick={() => { setSelected(1); Navigate('/') }} />
          <PanelButton selected={location.pathname === "/attendence"} id={2} title={'Attendance'} image={attendenceImg} handleClick={() => { Navigate('attendence') }} />
          <PanelButton selected={location.pathname === "/event"} id={2} title={'Event'} image={leaveBalanceImg} handleClick={() => { setSelected(7); Navigate('/event') }} />
          {/* {userRole ==="Admin" && <PanelAccordian title='Admin Management' image={AdminImg} id={0} options={adminOptions} />} */}

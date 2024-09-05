@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState, InitUser } from "./auth.type";
-import { LoginApi } from "./auth.action";
+import { LoginApi, updateUserAction } from "./auth.action";
 
 const initUser: InitUser = {
     uuid: '',
@@ -81,8 +81,18 @@ const authSlice = createSlice({
             state.isLogedin = false
             state.error = true
         })
-    }
+        builder.addCase(updateUserAction.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.user = action.payload;
 
+        })
+            .addCase(updateUserAction.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateUserAction.rejected, (state, action) => {
+                state.isLoading = false;
+            })
+    }
 })
 
 
