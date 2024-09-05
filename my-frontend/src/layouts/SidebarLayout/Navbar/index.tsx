@@ -7,6 +7,8 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import calenderSvg from '../../../assets/Images/Calendar.png';
 import logo from '../../../assets/Images/logo.png';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { RootState } from '../../../store/store';
 
 interface propsType {
     handleClickAvatar: any;
@@ -15,7 +17,9 @@ interface propsType {
 }
 
 function SidePanelNavbar({ handleClickAvatar, setOpenDrawer, openDrawer }: propsType) {
+    const user = useAppSelector((state: RootState) => state.persistedReducer.user)
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const bell = true
     const getWeekDay = () => {
         const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

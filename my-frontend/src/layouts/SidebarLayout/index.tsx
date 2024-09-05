@@ -4,6 +4,8 @@ import { Box, Menu, MenuItem, useMediaQuery } from '@mui/material'
 import { Outlet, useNavigate } from 'react-router';
 import SidePanelNavbar from './Navbar';
 import SidePanel from './SidePanel/SidePanel';
+import { useAppDispatch } from '../../hooks';
+import { logout } from '../../feature/auth/auth.slice';
 
 interface LayoutProps {
     children?: ReactNode;
@@ -11,6 +13,7 @@ interface LayoutProps {
 
 function SidebarLayout({ children }: LayoutProps) {
 
+    const dispatch = useAppDispatch()
     const navigate = useNavigate();
     const [menuAnchorRef, setMenuAnchorRef] = useState<HTMLElement | null>(null)
     const [openDrawer, setOpenDrawer] = useState<boolean>(true)
@@ -27,6 +30,7 @@ function SidebarLayout({ children }: LayoutProps) {
 
     const handleLogout = () => {
         handleCloseAvatar();
+        dispatch(logout())
     }
 
     useEffect(() => {
