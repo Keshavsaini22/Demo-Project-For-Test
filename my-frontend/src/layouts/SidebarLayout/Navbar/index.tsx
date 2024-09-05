@@ -54,8 +54,8 @@ function SidePanelNavbar({ handleClickAvatar, setOpenDrawer, openDrawer }: props
                 </Box>
                 <Box className={styles.profileBox}>
                     <Box className={styles.profileTextBox}>
-                        <Typography className={styles.userName}>{`user?.name`}</Typography>
-                        <Typography className={styles.userTitle}>{`user?.User_role?.role_type`}</Typography>
+                        <Typography className={styles.userName}>{`${user?.first_name} ${user?.last_name}`}</Typography>
+                        {/* <Typography className={styles.userTitle}>{`user?.User_role?.role_type`}</Typography> */}
                     </Box>
                     <Avatar className={styles.userAvatar} src={''} onClick={(event: any) => { handleClickAvatar(event) }} />
                 </Box>

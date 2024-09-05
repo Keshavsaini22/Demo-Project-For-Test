@@ -5,7 +5,7 @@ export type loginApiPayload = {
   
   export type InitUser = {
     uuid: string,
-    name: string,
+    first_name: string,
     last_name: string,
     role: string,
     email: string,

@@ -14,7 +14,8 @@
     "undo:all": " npx sequelize-cli db:migrate:undo:all",
     "seed": " npx sequelize-cli db:seed:all",
     "seed:undo": " npx sequelize-cli db:seed:undo",
-    "seed:undo:all": "npx sequelize-cli db:seed:undo:all"
+    "seed:undo:all": "npx sequelize-cli db:seed:undo:all",
+    "createAdmin": "node scripts/createAdmin.js"
   },
   "author": "",
   "license": "ISC",

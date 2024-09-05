@@ -4,7 +4,7 @@ import { LoginApi } from "./auth.action";
 
 const initUser: InitUser = {
     uuid: '',
-    name: '',
+    first_name: '',
     last_name: '',
     role: "",
     email: '',
