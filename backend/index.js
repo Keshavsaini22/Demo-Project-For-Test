@@ -19,7 +19,14 @@ class Server {
         this.app.use(cookieParser());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(cors());
+        this.app.use(cors(
+            {
+                origin: 'http://localhost:3000',  // Allow requests from this origin
+                credentials: true,  // Enable credentials (cookies, authorization headers, etc.)
+                methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed methods
+                allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
+            }
+        ));
     }
 
     setUpRoutes() {
