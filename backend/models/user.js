@@ -91,6 +91,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    docs: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
     // company_id: {
     //   type: DataTypes.INTEGER,
     //   allowNull: false,

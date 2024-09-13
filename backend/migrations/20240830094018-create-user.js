@@ -45,6 +45,9 @@ module.exports = {
           is: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
         }
       },
+      docs: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+      },
       // company_id: {
       //   type: Sequelize.INTEGER,
       //   allowNull: false,

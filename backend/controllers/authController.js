@@ -4,7 +4,7 @@ const { authService } = require("../services")
 class AuthController {
     static async register(req, res, next) {
         try {
-            const response = await authService.register({ body: req.body })
+            const response = await authService.register({ body: req.body,files:req.files })
             return res.status(CREATED).send(response)
         }
         catch (err) {

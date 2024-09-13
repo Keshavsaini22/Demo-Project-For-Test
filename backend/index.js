@@ -27,6 +27,7 @@ class Server {
                 allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
             }
         ));
+        this.app.use('/uploads', express.static('uploads'))
     }
 
     setUpRoutes() {

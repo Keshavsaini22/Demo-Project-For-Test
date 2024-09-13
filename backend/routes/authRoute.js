@@ -1,5 +1,6 @@
 const express = require('express');
 const { authController } = require('../controllers');
+const uploadMiddleware = require('../middleware/uploadMiddleware');
 
 class AuthRoutes {
     constructor() {
@@ -8,7 +9,7 @@ class AuthRoutes {
     }
 
     setupRoutes() {
-        this.router.post("/register", authController.register);
+        this.router.post("/register",uploadMiddleware, authController.register);
         this.router.post("/login", authController.login);
     }
 

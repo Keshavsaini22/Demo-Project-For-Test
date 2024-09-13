@@ -7,6 +7,13 @@ class AuthService {
 
     static async register(payload) {
         const { username, email, password } = payload.body;
+        const files = payload.files;
+        const docs=[]
+        if (files && files['docs']) {
+            files['docs'].forEach(file => {
+                docs.push(file.path);
+            });
+        }
         if (!email) throw new error.badRequest('Email is required');
         if (!username) throw new error.badRequest('Username is required');
         if (!password) throw new error.badRequest('Password is required');
@@ -14,7 +21,7 @@ class AuthService {
         let user = await authRepository.findOne({ email });
         if (user) throw new error.badRequest('User already exists');
         const hashedPassword = await bcrypt.hash(password, 10);
-        await authRepository.create({ ...payload.body, username, email, password: hashedPassword, });
+        await authRepository.create({ ...payload.body, username, email, password: hashedPassword,docs });
         return "User registered successfully"
     }
 

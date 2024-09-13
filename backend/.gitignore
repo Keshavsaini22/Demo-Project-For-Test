@@ -5,3 +5,4 @@ node_modules
 coverage
 /etc/secrets
 /static/keys.json
+/uploads
