@@ -12,8 +12,8 @@ class PusherService {
         });
     }
 
-    triggerEventRole(channelName, eventName, { uuid, role }) {
-        return this.pusher.trigger(`${channelName}_${uuid}`, eventName, { role });
+    triggerEventdemo() {
+        return this.pusher.trigger('demochannel', 'demoevent', "This is demo pusher message");
     }
 
     triggerEventLeaveApprove(channelName, eventName, { uuid, message }) {
