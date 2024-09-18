@@ -2,6 +2,7 @@ const { error } = require("../libs");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { authRepository } = require("../repositories");
+const publisher = require("../pub-sub/publish");
 
 class AuthService {
 
@@ -22,6 +23,7 @@ class AuthService {
         if (user) throw new error.badRequest('User already exists');
         const hashedPassword = await bcrypt.hash(password, 10);
         await authRepository.create({ ...payload.body, username, email, password: hashedPassword,docs });
+        await publisher.publish('user', { email: email, event: 'send-mail' });
         return "User registered successfully"
     }
 
