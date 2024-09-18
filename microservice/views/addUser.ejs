@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Company</title>
+    <%- include('styles.ejs') %>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to <%= companyName %>!</h1>
+        <p>Dear,</p>
+        <p>We are thrilled to welcome you to the <%= companyName %> team! Your skills and experience will be a great addition to our company, and we look forward to your contributions.</p>
+        <p>To get started, please complete your registration by clicking the link below:</p>
+        <a href="<%= registrationLink %>" class="button">Register Now</a>
+        <p>If you encounter any issues during registration or have any questions, don’t hesitate to contact us at <a href="mailto:support@company.com">support@company.com</a>.</p>
+        <p>We have a lot of exciting projects and opportunities ahead, and we are confident that you will make a significant impact. Welcome aboard!</p>
+        <p>Best regards,</p>
+        <p><%= companyName %> Team</p>
+        <div class="footer">
+            <p>Follow us on <a href="https://twitter.com/">Twitter</a>, <a href="https://linkedin.com/">LinkedIn</a>, and <a href="https://facebook.com/">Facebook</a> for updates and news.</p>
+            <p>&copy; <%= new Date().getFullYear() %> <%= companyName %>. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
